@@ -223,6 +223,8 @@ function render1() {
         content = content.replace("</section>", "");
         //最后面添加</section>
         content += "</section>";
+        content = content.replace(/&lt;/g, "<");
+        content = content.replace(/&gt;/g, ">");
 
 
         let oIframe = document.createElement('iframe');
@@ -241,6 +243,8 @@ function render1() {
         //Markdown渲染
         console.time("markdown");
         content = md.render(content);
+        content = content.replace(/&lt;/g, "<");
+        content = content.replace(/&gt;/g, ">");
         preview.innerHTML = content;
         console.timeEnd("markdown");
 
