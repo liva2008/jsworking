@@ -44,7 +44,7 @@
 
     <body>
         <h1>jsWorking</h1>
-<p>jsWorking是一款基于Web的用markdown编写html格式的doc和ppt单文档工具,可下载到本地使用，也可在线使用。</p>
+<p>jsWorking是一款基于Web的用markdown编写html格式的doc和ppt的单文档工具,支持程序语法高亮，数学公式，结构图和统计图，可下载到本地使用，也可在线使用。</p>
 <h2>1.主要特性</h2>
 <ul>
 <li>Markdown编写DOC</li>
@@ -55,6 +55,9 @@
 <li>本地打开与保存</li>
 <li>导出HTML文件</li>
 <li>自动暂存数据</li>
+<li>画结构图</li>
+<li>画统计图</li>
+<li>PDF阅读</li>
 </ul>
 <h2>2.使用说明</h2>
 <p>Markdown是一种用标识符编写固定文档格式的语言，对HTML的更进一步的精简，简单易用。</p>
@@ -90,8 +93,34 @@
 <h4>四级标题h4</h4>
 <h5>五级标题h5</h5>
 <h6>六级标题h6</h6>
-<h3>2.2 无序列表</h3>
-<p>用-表示无序列表，对应HTML的ul&gt;li标签。</p>
+<h3>2.2 字体</h3>
+<p>用*表示加粗，斜体，斜体加粗</p>
+<p>语法：</p>
+<blockquote>
+<p>*斜体*<br>
+**加粗**<br>
+***斜体加粗***</p>
+</blockquote>
+<p>效果：</p>
+<p><em>斜体</em><br>
+<strong>加粗</strong><br>
+<em><strong>斜体加粗</strong></em></p>
+<h3>2.3 引用</h3>
+<p>用&gt;表示引用，多个&gt;表示多层引用。</p>
+<p>语法：</p>
+<blockquote>
+<p>&gt; 引用<br>
+&gt;&gt; 引用</p>
+</blockquote>
+<p>效果：</p>
+<blockquote>
+<p>引用</p>
+<blockquote>
+<p>引用</p>
+</blockquote>
+</blockquote>
+<h3>2.4 无序列表</h3>
+<p>用-表示无序列表,子项-前需要3个以上空格，对应HTML的ul&gt;li标签。</p>
 <p>语法：</p>
 <blockquote>
 <p>- 项目</p>
@@ -107,13 +136,13 @@
 <p>- 项目3</p>
 </blockquote>
 <blockquote>
-<p>&nbsp;&nbsp;- 子项1</p>
+<p>&nbsp;&nbsp;&nbsp;- 子项1</p>
 </blockquote>
 <blockquote>
-<p>&nbsp;&nbsp;- 子项2</p>
+<p>&nbsp;&nbsp;&nbsp;- 子项2</p>
 </blockquote>
 <blockquote>
-<p>&nbsp;&nbsp;- 子项3</p>
+<p>&nbsp;&nbsp;&nbsp;- 子项3</p>
 </blockquote>
 <p>效果：</p>
 <ul>
@@ -127,7 +156,7 @@
 </ul>
 </li>
 </ul>
-<h3>2.4 图片</h3>
+<h3>2.5 图片</h3>
 <p>用![]()符号插入图片，对应HTML中img标签。</p>
 <p>语法：</p>
 <blockquote>
@@ -139,7 +168,7 @@
 </blockquote>
 <p>效果：</p>
 <p><img src="http://algorithm.jscoding.net/img/logo.svg" alt="logo"></p>
-<h3>2.5 超链接</h3>
+<h3>2.6 超链接</h3>
 <p>用[]()表示超链接</p>
 <p>语法：</p>
 <blockquote>
@@ -151,7 +180,7 @@
 </blockquote>
 <p>效果：</p>
 <p><a href="http://www.jsworking.com.cn/">jsWorking</a></p>
-<h3>2.6 程序</h3>
+<h3>2.7 程序</h3>
 <p>用```表示程序代码，支持指定语言的语法高亮，带行号。</p>
 <p>语法：</p>
 <blockquote>
@@ -181,7 +210,7 @@
 </blockquote>
 <p>效果：</p>
 <pre><code class="hljs language-javascript"><table class="hljs-ln"><tbody><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="1"><div class="hljs-ln-n" data-line-number="1"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="1"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">"a"</span>);</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="2"><div class="hljs-ln-n" data-line-number="2"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="2"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">"b"</span>);</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="3"><div class="hljs-ln-n" data-line-number="3"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="3"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">"c"</span>);</td></tr></tbody></table></code></pre>
-<h3>2.7 表格</h3>
+<h3>2.8 表格</h3>
 <p>用|表示制表符，用-分隔表头与数据，用:表示对齐方式。</p>
 <p>示例：</p>
 <blockquote>
@@ -210,7 +239,7 @@
 </tr>
 </tbody>
 </table>
-<h3>2.8 公式</h3>
+<h3>2.9 公式</h3>
 <p>采用Mathjax渲染Web公式。分行内和块公式两种。</p>
 <h4>行内公式</h4>
 <p>用单个$括起来的公式表示行内公式。</p>
@@ -223,7 +252,7 @@
 <p><span>$</span> f=ma <span>$</span></p>
 </blockquote>
 <p>效果:</p>
-<p><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="1322" style="font-size: 122.1%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D453 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="4"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>=</mo><mi>m</mi><mi>a</mi></math></mjx-assistive-mml></mjx-container></p>
+<p><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="1504" style="font-size: 122.1%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D453 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="4"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>=</mo><mi>m</mi><mi>a</mi></math></mjx-assistive-mml></mjx-container></p>
 <h4>块公式</h4>
 <p>用两个$$括起来的公式表示行内公式。</p>
 <p>语法：</p>
@@ -235,8 +264,8 @@
 <p><span>$</span><span>$</span> F= \frac{GMm}{r^2}<span>$</span><span>$</span></p>
 </blockquote>
 <p>效果：</p>
-<p><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" role="presentation" tabindex="0" ctxtmenu_counter="1323" style="font-size: 122.1%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D439 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mfrac space="4"><mjx-frac type="d"><mjx-num><mjx-nstrut type="d"></mjx-nstrut><mjx-mrow><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D43A TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D440 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi></mjx-mrow></mjx-num><mjx-dbox><mjx-dtable><mjx-line type="d"></mjx-line><mjx-row><mjx-den><mjx-dstrut type="d"></mjx-dstrut><mjx-msup><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45F TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.289em;"><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c32"></mjx-c></mjx-mn></mjx-script></mjx-msup></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>F</mi><mo>=</mo><mfrac><mrow><mi>G</mi><mi>M</mi><mi>m</mi></mrow><msup><mi>r</mi><mn>2</mn></msup></mfrac></math></mjx-assistive-mml></mjx-container></p>
-<h3>2.9 编写PPT</h3>
+<p><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" role="presentation" tabindex="0" ctxtmenu_counter="1505" style="font-size: 122.1%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D439 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mfrac space="4"><mjx-frac type="d"><mjx-num><mjx-nstrut type="d"></mjx-nstrut><mjx-mrow><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D43A TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D440 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi></mjx-mrow></mjx-num><mjx-dbox><mjx-dtable><mjx-line type="d"></mjx-line><mjx-row><mjx-den><mjx-dstrut type="d"></mjx-dstrut><mjx-msup><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45F TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.289em;"><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c32"></mjx-c></mjx-mn></mjx-script></mjx-msup></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>F</mi><mo>=</mo><mfrac><mrow><mi>G</mi><mi>M</mi><mi>m</mi></mrow><msup><mi>r</mi><mn>2</mn></msup></mfrac></math></mjx-assistive-mml></mjx-container></p>
+<h3>2.10 编写PPT</h3>
 <ul>
 <li>最开始位置要输入一行&lt;!--ppt--&gt;表示PPT。</li>
 <li>每一页PPT前输入一行&lt;!--page--&gt;表示一页。</li>
@@ -259,7 +288,11 @@
 <p># page2</p>
 </blockquote>
 <p>效果：</p>
-<p><img width="50%" src="./img/tutorial.png" alt="tutorial"></p>
+<p><img width="80%" src="./img/tutorial.png" alt="tutorial"></p>
+<h3>2.11 画结构图</h3>
+<p><img width="80%" src="./img/stuct.png" alt="tutorial"></p>
+<h3>2.12 画统计图</h3>
+<p><img width="80%" src="./img/stats.png" alt="tutorial"></p>
 
     </body>
 
