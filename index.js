@@ -228,18 +228,20 @@ function render1() {
         content = content.replace("</section>", "");
         //最后面添加</section>
         content += "</section>";
-        //同时支持html
+        /*
+        //保持html
         content = content.replace(/&lt;/g, "<");
         content = content.replace(/&gt;/g, ">");
+
         //替换原始svg
         //给svg加个标记
         content = content.replace(/<svg/g, "\"<svg");
         //console.log(content);
-        originContent.replace(/<svg(.*)<\/svg>$/gm, function (match, param, offset, string) {
+        originContent.replace(/<svg(.*)<\/svg>/gm, function (match, param, offset, string) {
             //console.log("svg",match, param, offset, string, "end");
             content = content.replace(/"<svg(.*)\/svg>/, match);
         });
-
+        */
 
         let oIframe = document.createElement('iframe');
         oIframe.width = "99%";
@@ -259,7 +261,9 @@ function render1() {
         
 
         content = md.render(content);
-        //同时支持html
+
+        /*
+        //保持html
         content = content.replace(/&lt;/g, "<");
         content = content.replace(/&gt;/g, ">");
         //替换原始svg
@@ -270,6 +274,7 @@ function render1() {
             //console.log("svg",match, param, offset, string, "end");
             content = content.replace(/"<svg(.*)\/svg>/, match);
         });
+        */
         //console.log(content);
         preview.innerHTML = content;
         console.timeEnd("markdown");
@@ -446,6 +451,7 @@ function pptHtml() {
     //最后面添加</section>
     c += "</section>";
 
+    /*
     //同时支持html
     c = c.replace(/&lt;/g, "<");
     c = c.replace(/&gt;/g, ">");
@@ -457,6 +463,7 @@ function pptHtml() {
         //console.log("svg",match, param, offset, string, "end");
         c = c.replace(/"<svg(.*)\/svg>/, match);
     });
+    */
 
     let html = `
 <!doctype html>
