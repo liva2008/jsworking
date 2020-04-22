@@ -261,6 +261,7 @@ function render1() {
         
 
         content = md.render(content);
+        
 
         /*
         //保持html
@@ -275,7 +276,7 @@ function render1() {
             content = content.replace(/"<svg(.*)\/svg>/, match);
         });
         */
-        //console.log(content);
+        console.log(content);
         preview.innerHTML = content;
         console.timeEnd("markdown");
 
