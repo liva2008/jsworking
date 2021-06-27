@@ -36,7 +36,7 @@ const highlightjs = (md, opts) => {
 
     md.options.highlight = opts.auto ? highlightAuto : highlight
     md.renderer.rules.fence = wrap(md.renderer.rules.fence)
-    console.log("highlight");
+    //console.log("highlight");
     if (opts.code) {
         md.renderer.rules.code_block = wrap(md.renderer.rules.code_block)
     }

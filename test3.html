@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPT</title>
+    <link rel="stylesheet" href="./reveal/dist/reveal.css">
+    <link rel="stylesheet" href="./reveal/dist/theme/black.css">
+    <script src="./reveal/dist/reveal.js"></script>
+    <script>
+        window.onload = function () {
+            Reveal.initialize({ width: 1900, height: 960, center: false });
+
+        } 
+    </script>
+</head>
+
+<body contenteditable="true">
+    <div class="reveal">
+        <div class="slides">
+            <section>Slide 1</section>
+            <section>
+                
+                <select name="language" id="language" onChange="selectMode()">
+                    <option value="python" selected>Python</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="html">HTML</option>
+                    <option value="markdown">Markdown</option>
+                    <option value="markmap">Markmap</option>
+                    <option value="mermaid">Mermaid</option>
+                    <option value="echarts">Echarts</option>
+                </select>
+            </section>
+        </div>
+    </div>
+</body>
+
+</html>

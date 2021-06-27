@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="./mermaid/mermaid.min.js"></script>
+  <script>
+
+    window.onload = function () {
+        window.addEventListener('message', function (event) {
+            //event.data获取传过来的数据
+            document.querySelector("#content").innerHTML = event.data.content;
+            mermaid.init();
+
+            console.log(document.body.scrollHeight);
+            parent.document.getElementById(event.data.name).height = document.body.scrollHeight;
+        });
+    }
+</script>
+</head>
+<body scroll='no'>
+  <div id='content' class="mermaid" style="display: flex;justify-content: center;align-items: center;">
+  </div>
+ 
+ <script>mermaid.initialize({startOnLoad:false});</script>
+</body>
+</html>

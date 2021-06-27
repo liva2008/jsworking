@@ -1,0 +1,197 @@
+html,
+body {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    background-color: gainsboro;
+}
+@font-face {
+    font-family: firacode;
+    src: url('./fonts/FiraCode.ttf');
+}
+@font-face {
+    font-family: JetBrainsMono;
+    src: url('./fonts/JetBrainsMono.ttf');
+}
+@font-face {
+    font-family: CascadiaCode;
+    src: url('./fonts/CascadiaCode.ttf');
+}
+@font-face {
+    font-family: SourceCodePro;
+    src: url('./fonts/SourceCodePro.ttf');
+}
+dialog{
+    background-color: #fdf6ec;
+    border-color: #faecd8;
+    color: #e6a23c;
+    top: 150px;
+    width: 360px;
+    border-radius: 10px;
+    border-width: 1px;
+    transition: opacity .3s,transform .4s,-webkit-transform .4s;
+}
+.menu {
+    width: 100%;
+    background-color: rgb(56, 56, 56);
+    padding: 0px;
+    margin: 0px;
+    height: 45px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+    z-index: 9999;
+}
+.status {
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(90deg, red, blue);
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    z-index: 9999;
+}
+.workspace {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    margin-top: 50px;
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: gainsboro;
+}
+.cell {
+    width: 90%;
+    border-left: 5px solid #000;
+    padding: 5px;
+    margin: 5px;
+    background-color: white;
+    border-radius: 5px;
+}
+.table {
+    display: table;
+    border-collapse: separate;
+    width: 100%;
+}
+.row {
+    display: table-row;
+    width: 100%;
+}
+.row .one {
+    display: table-cell;
+    width: 1%;
+}
+.row .two {
+    display: table-cell;
+    width: 99%;
+}
+.CodeMirror {
+    border: 1px solid #eee;
+    height: auto;
+}
+.CodeMirror-scroll {
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+img {
+    max-width: 100%;
+}
+/* 下拉按钮样式 */
+.dropbtn {
+    background-color: rgb(56, 56, 56);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+.dropbtn1 {
+    background-color: white;
+    color: black;
+    border: none;
+    cursor: pointer;
+}
+/* 容器 <div> - 需要定位下拉内容 */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+/* 下拉内容 (默认隐藏) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgb(56, 56, 56);
+    min-width: 200px;
+    z-index: 9999;
+}
+/* 下拉菜单的链接 */
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+/* 鼠标移上去后修改下拉菜单链接颜色 */
+.dropdown-content a:hover {
+    background-color: #50BDFF
+}
+/* 在鼠标移上去后显示下拉菜单 */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+/* 当下拉内容显示后修改下拉按钮的背景颜色 */
+.dropdown:hover .dropbtn {
+    background-color: #999;
+}
+.dropdown:hover .dropbtn1 {
+    background-color: white;
+}
+
+
+/*滚动条整体样式*/
+::-webkit-scrollbar {
+    width: 8px;
+    height: 1px;
+}
+/*滚动条滑块*/
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+    background: #535353;
+}
+/*滚动条轨道*/
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0);
+    border-radius: 5px;
+    background: #ccc;
+}
+.CodeMirror {
+    font-family: CascadiaCode;
+    font-size: 20px;
+}
+
+.recorder {
+    position: fixed;
+    width: 240px;
+    bottom: 0px;
+    left:  0px;
+    z-index: 100;
+    border-radius: 5px;
+}
+
+.recorder1 {
+    position: fixed;
+    width: 240px;
+    top: 0px;
+    left:  0px;
+    z-index: 100;
+    border-radius: 5px;
+}

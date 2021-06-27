@@ -656,7 +656,7 @@ var config = {
 //
 
 var BAD_PROTO_RE = /^(vbscript|javascript|file|data):/;
-var GOOD_DATA_RE = /^data:image\/(gif|png|jpeg|webp);/;
+var GOOD_DATA_RE = /^data:image\/(gif|png|jpeg|svg\+xml|webp);/;
 
 function validateLink(url) {
   // url should be normalized at this point, and existing entities are decoded
@@ -4122,17 +4122,17 @@ module.exports = function table(state, startLine, endLine, silent) {
 
   if (silent) { return true; }
 
-  token     = state.push('table_open', 'table', 1);
+  token     = state.push('table_open', 'table class="table"', 1);
   token.map = tableLines = [ startLine, 0 ];
 
-  token     = state.push('thead_open', 'thead', 1);
+  token     = state.push('thead_open', 'thead class="table"', 1);
   token.map = [ startLine, startLine + 1 ];
 
-  token     = state.push('tr_open', 'tr', 1);
+  token     = state.push('tr_open', 'tr class="table"', 1);
   token.map = [ startLine, startLine + 1 ];
 
   for (i = 0; i < columns.length; i++) {
-    token          = state.push('th_open', 'th', 1);
+    token          = state.push('th_open', 'th class="table"', 1);
     token.map      = [ startLine, startLine + 1 ];
     if (aligns[i]) {
       token.attrs  = [ [ 'style', 'text-align:' + aligns[i] ] ];
@@ -4149,7 +4149,7 @@ module.exports = function table(state, startLine, endLine, silent) {
   token     = state.push('tr_close', 'tr', -1);
   token     = state.push('thead_close', 'thead', -1);
 
-  token     = state.push('tbody_open', 'tbody', 1);
+  token     = state.push('tbody_open', 'tbody class="table"', 1);
   token.map = tbodyLines = [ startLine + 2, 0 ];
 
   for (nextLine = startLine + 2; nextLine < endLine; nextLine++) {
@@ -4160,9 +4160,9 @@ module.exports = function table(state, startLine, endLine, silent) {
     if (state.sCount[nextLine] - state.blkIndent >= 4) { break; }
     columns = escapedSplit(lineText.replace(/^\||\|$/g, ''));
 
-    token = state.push('tr_open', 'tr', 1);
+    token = state.push('tr_open', 'tr class="table"', 1);
     for (i = 0; i < columnCount; i++) {
-      token          = state.push('td_open', 'td', 1);
+      token          = state.push('td_open', 'td class="table"', 1);
       if (aligns[i]) {
         token.attrs  = [ [ 'style', 'text-align:' + aligns[i] ] ];
       }

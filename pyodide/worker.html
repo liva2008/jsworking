@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="./pyodide.js"></script>
+</head>
+
+<body>
+  <p>You can execute any Python code. Just enter something in the box below and click the button.</p>
+  <textarea id='code' style='width: 100%;' rows='10'>print(sum([1, 2, 3, 4, 5]))</textarea>
+  <button onclick='evaluatePython()'>Run</button>
+  <br>
+  <br>
+  <div>
+    Output:
+  </div>
+  <textarea id='output' style='width: 100%;' rows='6' disabled></textarea>
+
+  <script>
+    const output = document.getElementById("output");
+    const code = document.getElementById("code");
+
+    function addToOutput(s) {
+      output.value += s + '\n';
+    }
+
+    output.value = 'Initializing...\n';
+    // init Pyodide
+    const pyodideWorker = new Worker('./webworker.js');
+	pyodideWorker.onerror = (e) => addToOutput(e.data.error);
+	pyodideWorker.onmessage = (e) => addToOutput(e.data.results);
+
+    async function evaluatePython() {
+	  
+	  //pyodide.globals.set('alert', alert);
+	  //alert(code.value)
+	  /*
+	  let output = pyodide.runPythonAsync(code.value)
+		.then((output) => addToOutput(output))
+		.catch((error) => addToOutput(error));
+		*/
+      try {
+        //let output = await pyodide.runPythonAsync(code.value);
+		//let output = pyodide.runPython(code.value);
+        //addToOutput(output);
+		pyodideWorker.postMessage({python:code.value, key:''});
+      } catch(err) {
+        addToOutput(err);
+      }
+    }
+  </script>
+</body>
+
+</html>

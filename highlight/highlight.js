@@ -95,6 +95,7 @@ const HLJS = function(hljs) {
    * @property {boolean} illegal - indicates whether any illegal matches were found
   */
   function highlight(languageName, code, ignore_illegals, continuation) {
+	 console.log("highlightjs");
     var context = {
       code,
       language: languageName
@@ -455,6 +456,7 @@ const HLJS = function(hljs) {
 
   */
   function highlightAuto(code, languageSubset) {
+	  console.log("highlightAuto");
     languageSubset = languageSubset || options.languages || Object.keys(languages);
     var result = {
       relevance: 0,
@@ -574,6 +576,7 @@ const HLJS = function(hljs) {
   Applies highlighting to all <pre><code>..</code></pre> blocks on a page.
   */
   function initHighlighting() {
+	  console.log("initHighlighting");
     if (initHighlighting.called)
       return;
     initHighlighting.called = true;
@@ -586,6 +589,7 @@ const HLJS = function(hljs) {
   Attaches highlighting to the page load event.
   */
   function initHighlightingOnLoad() {
+	  console.log("initHighlightingOnLoad");
     window.addEventListener('DOMContentLoaded', initHighlighting, false);
   }
 

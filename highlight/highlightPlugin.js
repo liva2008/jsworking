@@ -4,7 +4,7 @@ const highlightPlugin = (md) => {
     const token = tokens[idx]
     const code = token.content.trim()
     if (token.info.length > 0) {
-      console.log(hljs.highlightAuto(code, [token.info]).value);
+      //console.log(hljs.highlightAuto(code, [token.info]).value);
       return `<pre><code class="hljs javascript">${hljs.highlightAuto(code, [token.info]).value}</code></pre>`
     }
     return temp(tokens, idx, options, env, slf)

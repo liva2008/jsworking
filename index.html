@@ -1,82 +1,249 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="google" value="notranslate">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>jsWorking</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./vs/editor/editor.main.css">
-    <script src="./markdownit/markdown-it.js"></script>
-    <script>
-        MathJax = {
-            tex: {
-                inlineMath: [
-                    ['$', '$'],
-                    ['\\(', '\\)']
-                ]
-            },
-            startup: {
-                ready: function () {
-                    MathJax.startup.defaultReady();
-                }
-            }
-        }
-    </script>
-    <script id="MathJax-script" async src="./mathjax3/tex-mml-chtml.js">
-    </script>
-    <script src="./markdownit/markdown-it-mathjax.js" charset="utf-8"></script>
-    <link rel="stylesheet" href="./highlight/styles/monokai.css">
-    <script src="./highlight/highlight.min.js"></script>
-    <script src="./highlight/highlightjs-line-numbers.min.js"></script>
-    <script src="./highlight/highlightPlugin.js"></script>
-    <script src="./highlight/markdown-it-highlightjs.js"></script>
-    <script src="./highlight/markdown-it-highlight-lines.js"></script>
-    <script src="./utils/FileSaver.js"></script>
-    <script src="utils/ponyfill.min.js"></script>
-    <script src="utils/Blob.js"></script>
-    <script src="./utils/StreamSaver.js"></script>
-    <script src="./vs/loader.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsWorking极速工作3</title>
+    <link rel="Shortcut Icon" href="./icon.svg" type="image/x-icon" />
+    <script src='./jquery/jquery-3.6.0.min.js'></script>
+    <script src="./codemirror/codemirror.js"></script>
+    <script src="./codemirror/mode/python/python.js"></script>
+    <script src="./codemirror/mode/javascript/javascript.js"></script>
+    <script src='./codemirror/mode/markdown/markdown.js'></script>
+    <script src='./codemirror/mode/xml/xml.js'></script>
+    <script src='./codemirror/mode/css/css.js'></script>
+    <script src='./codemirror/mode/htmlmixed/htmlmixed.js'></script>
+    <script src="./echarts/parts.js"></script>
+    <link rel="stylesheet" href="./codemirror/codemirror.css">
+    <link rel="stylesheet" href="./x0popup/x0popup.min.css">
+    <script src="./x0popup/x0popup.min.js"></script>
+    <script src='./filesaver/FileSaver.min.js'></script>
+    <link rel="stylesheet" href="./index.css">
+    <script src="./index.js"></script>
+    <link rel="stylesheet" href="./douBoard/style.css">
 </head>
 
-<body scroll="no">
-    <div style="padding: 5px;">
-        <font color="red"><b>jsWorking</b></font>
-        <input type="file" name="file" id="open" />
-        <input type="button" id="save" value="保存" />
-        <input type="button" id="export" value="导出" />
-        <input type="checkbox" id="view" value="true" checked />预览
-        <input type="checkbox" id="fullview" value="true" />全窗预览
-        <a href="http://www.jsdrawing.com" target="_blank">结构图</a>
-        <a href="http://www.jsdrawing.com.cn" target="_blank">统计图</a>
-        <a href="pdf/index.html" target="_blank">PDF</a>
-        <a href="tutorial.html" target="_blank">帮助</a>
-        <a href="https://github.com/liva2008/jsworking" target="_blank">GitHub</a>
+<body>
+    <div class="menu">
+        <div>
+            <b>
+                <font color="yellow">&nbsp;js</font>
+                <font color="#50BDFF">Working&nbsp;</font>
+            </b>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">文件</button>
+            <div class="dropdown-content">
+                <a onclick="newFile()">新建</a>
+                <a onclick="openFile()">打开</a>
+                <a onclick="store();x0p('save','ok','info');">保存</a>
+                <a onclick=>历史</a>
+                <input type="file" name="open" id="open" accept=".jsw" hidden />
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn" title='在末尾添加单元'>插入</button>
+            <div class="dropdown-content">
+                <a onclick="append('python','python')"
+                    style="font-family: FiraCode;">Python&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Alt+1)</a>
+                <a onclick="append('javascript','javascript')"
+                    style="font-family: FiraCode;">Javascript&nbsp;(Alt+2)</a>
+                <a onclick="append('javascript','typescript')"
+                    style="font-family: FiraCode;">Typescript&nbsp;(Alt+3)</a>
+                <a onclick="append('text/html', 'html')"
+                    style="font-family: FiraCode;">HTML&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Alt+4)</a>
+                <a onclick="append('markdown','markdown')"
+                    style="font-family: FiraCode;">Markdown&nbsp;&nbsp;&nbsp;(Alt+5)</a>
+                <a onclick="append('markdown','markmap')"
+                    style="font-family: FiraCode;">Markmap&nbsp;&nbsp;&nbsp;&nbsp;(Alt+6)</a>
+                <a onclick="append('markdown', 'mermaid')"
+                    style="font-family: FiraCode;">Mermaid&nbsp;&nbsp;&nbsp;&nbsp;(Alt+7)</a>
+                <a onclick="append('javascript', 'echarts')"
+                    style="font-family: FiraCode;">Echarts&nbsp;&nbsp;&nbsp;&nbsp;(Alt+8)</a>
+                <a onclick="openImage(0,'text/html', 'image', 'last')"
+                    style="font-family: FiraCode;">Image&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Alt+9)</a>
+                <input type="file" name="image" id="image" accept=".webp,.svg,.jpg,.png,.gif" hidden multiple />
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn" title='运行单元'>运行</button>
+            <div class="dropdown-content">
+                <a onclick="runAllCell()">所有单元</a>
+                <a onclick="runCell(`${currentCell}`)">当前单元(Ctrl+Enter)</a>
+                <a onclick="hideAllRun()">隐藏所有结果</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">导出</button>
+            <div class="dropdown-content">
+                <a onclick="fileSaveAs()">源文件</a>
+                <a onclick="append('python','python')">PDF</a>
+                <a onclick="append('javascript','javascript')">PPT</a>
+                <a onclick="append('javascript','javascript')">HTML</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">工具</button>
+            <div class="dropdown-content">
+                <a><input type="checkbox" id="wbcheckbox" value="true" onclick="whiteboard();"/>白板</a>
+                <a><input type="checkbox" id="rscheckbox" value="true" onclick="recordscreen();"/>录屏</a>
+                <a><input type="checkbox" id="rvcheckbox" value="true" onclick="recordvideo();"/>录像</a>
+                <a><input type="checkbox" id="cmcheckbox" value="true" onclick="classroom();"/>教室</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">帮助</button>
+            <div class="dropdown-content">
+                <a onclick="append('python','python')">教程</a>
+                <a onclick="aboutDialog()">关于</a>
+            </div>
+        </div>
     </div>
-    
-    <hr style="padding: 0px;margin: 0px;">
-    <table id="mytable" style="width:100%;height:93%;">
-        <tr align="left">
-            <td style="width:60%;" align="left">
-                <div id="editor" class="content"></div>
-            </td>
-            <td style="width:40%;" valign="top">
-                <div id="preview" class="previewscroll"></div>
-            </td>
-        </tr>
-    </table>
-    <script src="./index.js"></script>
-    <script>
-        var _hmt = _hmt || [];
-        (function () {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?3dca7e1298721824d38e24a36a34c986";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
+    <div id='workspace' class="workspace">
+        <!--
+        <div id='cell1' class="cell">
+            <div class="table">
+                <div class="row">
+                    <div class="one">
+                        <div class="dropdown">
+                            <button class="dropbtn" title='向前添加Cell'>+</button>
+                            <div class="dropdown-content">
+                                <a onclick="appendBefore('cell1', 'python', 'python')">Python</a>
+                                <a href="#">Javascipt</a>
+                                <a href="#">HTML</a>
+                                <a href="#">Markdwon</a>
+                                <a href="#">Markmap</a>
+                                <a href="#">Mermaid</a>
+                                <a href="#">Echarts</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="two" style="text-align: right;">
+                        <label>Python</label>
+                        <button onclick="getContent('editor1')" title="删除当前Cell">-</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="one" style="vertical-align: bottom;">
+                        <button class="dropbtn" title='上移当前Cell' onclick="moveUp('cell1')">∧</button><br>
+                        <button class="dropbtn" title='下移当前Cell' onclick="moveDown('cell1')">∨</button><br>
+                        <button class="dropbtn" title='运行当前Cell'>▶</button><br>
+                        <div class="dropdown">
+                            <button class="dropbtn" title='向后添加Cell'>+</button>
+                            <div class="dropdown-content">
+                                <a onclick="appendAfter('cell1', 'python','python')">Python</a>
+                                <a href="#">Javascipt</a>
+                                <a href="#">HTML</a>
+                                <a href="#">Markdwon</a>
+                                <a href="#">Markmap</a>
+                                <a href="#">Mermaid</a>
+                                <a href="#">Echarts</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="two">
+                        <textarea id='editor1' name='editor1' style="width: 100%;" rows=10></textarea>
+                        <div style="background-color:lightgray; color: white;">test
+                            test<br>
+                            test
+                        </div>
+                        <script>
+                            var CodeMirrorEditor = CodeMirror.fromTextArea(document.getElementById('editor1'), {
+                                lineNumbers: true,
+                                viewportMargin: Infinity,
+                                mode: "python",
+                                indentUnit: 4
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+    </div>
+    <div style="height: 450px;">
+    </div>
+    <div id='whiteboard' style="display: none;">
+        <canvas height="100%" width="100%" id="mainCanvas"></canvas>
+        <div id="toolbar-container">
+            <div class="eraser"></div>
+            <div class="toolbar">
+                <div class="toolbar-pen active">笔</div>
+                <div class="toolbar-eraser">橡皮</div>
+            </div>
+            <div class="toolbarmenu">
+                <div class="toolbarmenu-pen">
+                    <div class="width-viewer"></div>
+                    <div class="switcher-container" type="width">
+                        <div class="width-switcher-4">
+                            <span></span>
+                        </div>
+                        <div class="width-switcher-3">
+                            <span></span>
+                        </div>
+                        <div class="width-switcher-2">
+                            <span></span>
+                        </div>
+                        <div class="width-switcher-1 active">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="switcher-container" type="color">
+                    </div>
+                </div>
+                <div class="toolbarmenu-eraser">
+                    <p class="clearAll"><img src="./douBoard/assets/icons/trashcan.svg" width="21px" />清空画布</p>
+                </div>
+            </div>
+        </div>
+        <script src="./douBoard/core.js"></script>
+    </div>
+    <div class="recorder" id='recordscreen' style="display: none;">
+        <video id='rsv' controls autoplay playsinline muted="false" volume=0 width="240" height="180"></video>
+    </div>
+    <div class="recorder1" id='recordvideo' style="display: none;">
+        <video id="rvv" controls autoplay playsinline muted="false" volume=0 width="240" height="180"></video>
+    </div>
+    <div class="status">
+    </div>
+    <dialog id="aboutdialog">
+        <h2>关于</h2>
+        <hr>
+        <div style="height: 300px; overflow: auto;padding-left: 10px;">
+            jsWorking极速工作 V3.0@2021<br>
+            专注极速写文档、做PPT的Web工作平台。<br>
+            所有数据均不上传互联网。<br>
+            所用软件声明：<br>
+            <a href='https://github.com/pyodide/pyodide' target="_blank">pyodide</a><br>
+            <a href='https://www.typescriptlang.org/' target="_blank">typescript</a><br>
+            <a href='https://microsoft.github.io/monaco-editor/index.html' target="_blank">monacoeditor</a><br>
+            <a href='https://codemirror.net/' target="_blank">codemirror</a><br>
+            <a href='' target="_blank">markdown-it</a><br>
+            <a href='' target="_blank">reveal.js</a><br>
+            <a href='' target="_blank">highlight.js</a><br>
+            <a href='https://www.mathjax.org/' target="_blank">Mathjax</a><br>
+            <a href='https://mermaid-js.github.io/' target="_blank">mermaid.js</a><br>
+            <a href='https://markmap.js.org/' target="_blank">markmap.js</a><br>
+            <a href='https://echarts.apache.org/' target="_blank">echarts</a><br>
+            <a href='http://mozilla.github.io/pdf.js/' target="_blank">pdf.js</a><br>
+            <a href='https://dexie.org/' target="_blank">dexie.js</a><br>
+            <a href='' target="_blank">streamSaver</a><br>
+            <a href='https://jquery.com/' target="_blank">jquery</a><br>
+            <a href='' target="_blank">FiraCode</a><br>
+            <a href='' target="_blank">CascadiaCode</a><br>
+            <a href='' target="_blank">SourceCodePro</a><br>
+            <a href='' target="_blank">JetBrainsMono</a><br>
+            主要开发人员：<br>
+            liva2008,liva2008@qq.com
+        </div>
+        <hr>
+        <div>
+            <button id="closedialog">关闭</button>
+        </div>
+    </dialog>
 </body>
 
 </html>

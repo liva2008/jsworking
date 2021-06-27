@@ -1,14 +1,261 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>MathJax TeX Test Page</title>
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-</script>
-<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-HTML_full"></script>
+  <script src="./echarts/parts.js"></script>
 </head>
-<body>
-When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
-$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+
+<body contentEditable='false'>
+  <p>Python</p>
+  <textarea id='pycode' style='width: 100%;' rows='8'>
+    print(sum([1, 2, 3, 4, 5]))
+  </textarea>
+  <button onclick='evaluatePython()'>Run</button>
+  <br>
+  <br>
+  <div id='pyoutput1'>
+    Output:
+  </div>
+  <textarea id='pyoutput' style='width: 100%;' rows='6' disabled>
+  </textarea>
+
+  <script>
+    //工作者模式运行
+    
+    const output = document.getElementById("pyoutput");
+    const code = document.getElementById("pycode");
+
+    function addToOutput(s) {
+      output.value += s + '\n';
+    }
+
+    output.value = 'Initializing...\n';
+    // init Pyodide
+    const pyodideWorker = new Worker('./pythonworker.js');
+    pyodideWorker.onerror = (e) => addToOutput(e.data.error);
+    pyodideWorker.onmessage = (e) => addToOutput(e.data.results);
+
+    async function evaluatePython() {
+      try {
+        //let output = await pyodide.runPythonAsync(code.value);
+        //let output = pyodide.runPython(code.value);
+        //addToOutput(output);
+        pyodideWorker.postMessage({
+          python: code.value,
+          key: ''
+        });
+      } catch (err) {
+        addToOutput(err);
+      }
+    }
+    
+    
+    /*
+    // iframe方式运行
+    const code6 = document.getElementById("pycode");
+    const output6 = document.getElementById("pyoutput1");
+
+    function evaluatePython() {
+      output6.innerHTML = '';
+      let oIframe = document.createElement('iframe');
+      oIframe.id = "pyFrame";
+      oIframe.name = "pyFrame";
+      oIframe.width = "100%";
+      oIframe.frameBorder = 0;
+      oIframe.scrolling = 'no';
+      oIframe.src = `./python.html`;
+      oIframe.onload = function () {
+        oIframe.contentWindow.postMessage({
+          "content": code6.value, name: oIframe.name
+        }, '*');
+      }
+      output6.appendChild(oIframe);
+    }
+    */
+  </script>
+  <p>Javascript</p>
+  <textarea id='jscode' style='width: 100%;' rows='8'>
+    document.write("hello")
+  </textarea>
+  <button onclick='evaluateJavascript()'>Run</button>
+  <br>
+  <br>
+  <div>
+    Output:
+  </div>
+  <div id='jsoutput'></div>
+  <script>
+    const code2 = document.getElementById("jscode");
+    const output2 = document.getElementById("jsoutput");
+
+    function evaluateJavascript() {
+      output2.innerHTML = '';
+      let oIframe = document.createElement('iframe');
+      oIframe.id = "jsFrame";
+      oIframe.name = "jsFrame";
+      oIframe.width = "100%";
+      oIframe.height = "100%";
+      oIframe.frameBorder = 1;
+      oIframe.src = `./javascriptworker.html`;
+      output2.appendChild(oIframe);
+      window.frames['jsFrame'].document.write(`<script>${code2.value}<\/script>`);
+    }
+  </script>
+  <p>Markdown</p>
+  <textarea id='mdcode' style='width: 100%;' rows='8'># test</textarea>
+  <button onclick='evaluateMarkdown()'>Run</button>
+  <br>
+  <br>
+  <div>
+    Output:
+  </div>
+  <div id='mdoutput'></div>
+  <script>
+    const output1 = document.getElementById("mdoutput");
+    const code1 = document.getElementById("mdcode");
+
+    let markdowndWorker = new Worker("./markdownworker.js");
+    markdowndWorker.onmessage = (e) => {
+      output1.innerHTML = '';
+      let oIframe = document.createElement('iframe');
+      oIframe.id = "mdFrame";
+      oIframe.name = "mdFrame";
+      oIframe.width = "100%";
+      oIframe.scrolling = 'no';
+      oIframe.frameBorder = 0;
+      oIframe.src = `./markdown.html`;
+      oIframe.onload = function () {
+        oIframe.contentWindow.postMessage({
+          "content": e.data.content, name: oIframe.name
+        }, '*');
+      }
+      output1.appendChild(oIframe);
+    };
+
+    function evaluateMarkdown() {
+      markdowndWorker.postMessage({
+        'content': code1.value
+      });
+    }
+  </script>
+  <p>Mermaid</p>
+  <textarea id='mmcode' style='width: 100%;' rows='8'>
+  graph LR
+    A --- B
+    B-->C[fa:fa-ban forbidden]
+    B-->D(fa:fa-spinner);
+  </textarea>
+  <button onclick='evaluateMermaid()'>Run</button>
+  <br>
+  <br>
+  <div>
+    Output:
+  </div>
+  <div id='mmoutput'></div>
+  <script>
+    const code3 = document.getElementById("mmcode");
+    const output3 = document.getElementById("mmoutput");
+
+    function evaluateMermaid() {
+      output3.innerHTML = '';
+      let oIframe = document.createElement('iframe');
+      oIframe.id = "mmFrame";
+      oIframe.name = "mmFrame";
+      oIframe.width = "100%";
+      oIframe.frameBorder = 0;
+      oIframe.scrolling = 'no';
+      oIframe.src = `./mermaidworker.html`;
+      oIframe.onload = function () {
+        oIframe.contentWindow.postMessage({
+          "content": code3.value, name: oIframe.name
+        }, '*');
+      }
+      output3.appendChild(oIframe);
+    }
+  </script>
+  <p>Echarts</p>
+  <textarea id='eccode' style='width: 100%;' rows='8'>
+    option = {
+      xAxis: {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+          type: 'value'
+      },
+      series: [{
+          data: [820, 932, 901, 934, 1290, 1330, 1320],
+          type: 'line'
+      }]
+  };
+  </textarea>
+  <button onclick='evaluateEcharts()'>Run</button>
+  <br>
+  <br>
+  <div>
+    Output:
+  </div>
+  <div id='ecoutput'></div>
+  <script>
+    const code4 = document.getElementById("eccode");
+    const output4 = document.getElementById("ecoutput");
+
+    function evaluateEcharts() {
+      output4.innerHTML = '';
+      let oIframe = document.createElement('iframe');
+      oIframe.id = "ecFrame";
+      oIframe.name = "ecFrame";
+      oIframe.width = "100%";
+      oIframe.scrolling = "no";
+      oIframe.frameBorder = 0;
+      oIframe.src = `./echartsworker.html`;
+      oIframe.onload = function () {
+        oIframe.contentWindow.postMessage(
+          { content: part1 + code4.value + part2, name: oIframe.name }
+          , '*');
+      }
+      output4.appendChild(oIframe);
+
+    }
+  </script>
+  <p>Markmap</p>
+  <textarea id='mmcode1' style='width: 100%;' rows='8'>
+# test
+## test1
+- hi
+- hi
+## test1
+- hello
+- hello
+  </textarea>
+  <button onclick='evaluateMarkmap()'>Run</button>
+  <br>
+  <br>
+  <div>
+    Output:
+  </div>
+  <div id='mmoutput1'></div>
+  <script>
+    const output5 = document.getElementById("mmoutput1");
+    const code5 = document.getElementById("mmcode1");
+
+    function evaluateMarkmap() {
+      output5.innerHTML = '';
+      let oIframe = document.createElement('iframe');
+      oIframe.id = "mmFrame1";
+      oIframe.name = "mmFrame1";
+      oIframe.width = "100%";
+      oIframe.scrolling = "no";
+      oIframe.frameBorder = 0;
+      oIframe.src = `./markmapworker.html`;
+      oIframe.onload = function () {
+        oIframe.contentWindow.postMessage({
+          "content": code5.value, name: oIframe.name
+        }, '*');
+      }
+      output5.appendChild(oIframe);
+    }
+  </script>
 </body>
+
 </html>

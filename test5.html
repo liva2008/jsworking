@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <button id="btn-start-getDisplayMedia">Start getDisplayMedia API</button>
+        <button id="btn-stop-getDisplayMedia">Stop getDisplayMedia API</button>
+    </div>
+    <div>
+        <button id="btn-start-getUserMedia">Start getUserMedia API</button>
+        <button id="btn-stop-getUserMedia">Stop getUserMedia API</button>
+    </div>
+    <video controls autoplay playsinline muted="false" volume=0 width="480" height="320"></video>
+    <script>
+        var video = document.querySelector('video');
+        var start = document.querySelector('#btn-start-getDisplayMedia');
+        var stop = document.querySelector('#btn-stop-getDisplayMedia');
+        var start1 = document.querySelector('#btn-start-getUserMedia');
+        var stop1 = document.querySelector('#btn-stop-getUserMedia');
+
+        let stream;
+        let mediaRecorder;
+        var recordedChunks = [];
+
+        //检测浏览器是否支持录屏
+        start.disabled = true;
+        if (!!navigator.getDisplayMedia || (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia)) {
+            start.disabled = false;
+        }
+
+        start.onclick = async function () {
+            recordedChunks = [];
+            start.disabled = true;
+            stop.disabled = false;
+
+            var displayMediaStreamConstraints = {
+                video: true,
+                audio: true
+            };
+            if (navigator.mediaDevices.getDisplayMedia) {
+                stream = await navigator.mediaDevices.getDisplayMedia(displayMediaStreamConstraints)
+            }
+            else {
+                stream = await navigator.getDisplayMedia(displayMediaStreamConstraints);
+            }
+
+
+
+            video.srcObject = stream;
+
+
+            stream.addEventListener('ended', function () {
+                stopanddownload()
+            }, false);
+
+            stream.getTracks().forEach(function (track) {
+                track.addEventListener('ended', function () {
+                    stopanddownload()
+                }, false);
+            });
+
+
+            var options = {
+                audioBitsPerSecond: 128000,
+                videoBitsPerSecond: 2500000,
+                mimeType: "video/webm"
+            };
+            mediaRecorder = new MediaRecorder(stream, options);
+
+            function handleDataAvailable(event) {
+                //console.log("data-available");
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                    //console.log(recordedChunks);
+                } else {
+                    // ...
+                }
+            }
+
+            mediaRecorder.ondataavailable = handleDataAvailable;
+            mediaRecorder.start(100);
+        }
+
+        stop.disabled = true;
+        stop.onclick = stopanddownload;
+
+        function stopanddownload() {
+            start.disabled = false;
+            stop.disabled = true;
+            //停止录屏
+            let tracks = video.srcObject.getTracks();
+            tracks.forEach(track => track.stop());
+            video.srcObject = null;
+
+            mediaRecorder.stop();
+
+            var blob = new Blob(recordedChunks, {
+                type: "video/webm"
+            });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: none";
+            a.href = url;
+            a.download = "test.webm";
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        //检测是否有摄像头，麦克风,扬声器
+        var hasMicrophone = false;
+        var hasSpeakers = false;
+        var hasWebcam = false;
+        if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+            navigator.mediaDevices.enumerateDevices().then((devices) => {
+                console.log('device', devices);
+                devices.forEach(function (device) {
+                    console.log(device.kind);
+                    if (device.kind === 'videoinput') {
+                        hasWebcam = true;
+                    }
+                    else if (device.kind === 'audioinput') {
+                        hasMicrophone = true;
+                    }
+                    else if (device.kind === 'audiooutput') {
+                        hasSpeakers = true;
+                    }
+                });
+
+                if ((!hasMicrophone) && (!hasWebcam)) {
+                    start1.disabled = true;
+                }
+
+            }).catch(function (err) {
+                console.log(err.name + ": " + err.message);
+            });
+        }
+
+        start1.onclick = async function () {
+            recordedChunks = [];
+            this.disabled = true;
+            stop1.disabled = false;
+
+            var displayMediaStreamConstraints = {
+                video: hasWebcam,
+                audio: hasMicrophone && hasSpeakers
+            };
+
+            if (navigator.mediaDevices.getUserMedia) {
+                stream = await navigator.mediaDevices.getUserMedia(displayMediaStreamConstraints)
+            }
+            else {
+                stream = await navigator.getUserMedia(displayMediaStreamConstraints);
+            }
+
+
+
+            video.srcObject = stream;
+
+
+            stream.addEventListener('ended', function () {
+                stopanddownload1()
+            }, false);
+
+            stream.getTracks().forEach(function (track) {
+                track.addEventListener('ended', function () {
+                    stopanddownload1()
+                }, false);
+            });
+
+
+            var options = {
+                audioBitsPerSecond: 128000,
+                videoBitsPerSecond: 2500000,
+                mimeType: "video/webm"
+            };
+            mediaRecorder = new MediaRecorder(stream, options);
+
+            function handleDataAvailable(event) {
+                //console.log("data-available");
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                    //console.log(recordedChunks);
+                } else {
+                    // ...
+                }
+            }
+
+            mediaRecorder.ondataavailable = handleDataAvailable;
+            mediaRecorder.start(100);
+        }
+
+        stop1.disabled = true;
+        stop1.onclick = stopanddownload1;
+
+        function stopanddownload1() {
+            start1.disabled = false;
+            stop1.disabled = true;
+            //停止录屏
+            let tracks = video.srcObject.getTracks();
+            tracks.forEach(track => track.stop());
+            video.srcObject = null;
+
+            mediaRecorder.stop();
+
+            var blob = new Blob(recordedChunks, {
+                type: "video/webm"
+            });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: none";
+            a.href = url;
+            a.download = "test.webm";
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+    </script>
+</body>
+
+</html>

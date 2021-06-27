@@ -1,0 +1,242 @@
+body {
+    margin: 0 auto;
+    font-family: "ubuntu", "Tahoma", "Microsoft YaHei", arial, sans-serif;
+    color: #444444;
+    line-height: 1;
+    padding: 30px;
+}
+
+img {
+    max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    color: #111111;
+    font-weight: 400;
+    margin-top: 1em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: Georgia, Palatino, serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+dl {
+    margin-bottom: 16px;
+    padding: 0;
+}
+
+p {
+    margin-top: 8px;
+    margin-bottom: 3px;
+}
+
+h1 {
+    font-size: 48px;
+    line-height: 54px;
+}
+
+h2 {
+    font-size: 36px;
+    line-height: 42px;
+}
+
+h1,
+h2 {
+    border-bottom: 1px solid #EFEAEA;
+    padding-bottom: 10px;
+}
+
+h3 {
+    font-size: 24px;
+    line-height: 30px;
+}
+
+h4 {
+    font-size: 21px;
+    line-height: 26px;
+}
+
+h5 {
+    font-size: 18px;
+    line-height: 23px;
+}
+
+a {
+    color: #0099ff;
+    margin: 0 2px;
+    padding: 0;
+    vertical-align: baseline;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #ff6600;
+}
+
+a:visited {
+    /*color: purple;*/
+}
+
+ul,
+ol {
+    padding: 0;
+    padding-left: 18px;
+    margin: 0;
+}
+
+li {
+    line-height: 24px;
+}
+
+p,
+ul,
+ol {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+ol ol,
+ul ol {
+    list-style-type: lower-roman;
+}
+
+/* for block of numbers */
+.hljs-ln-numbers {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    text-align: center;
+    color: #ccc;
+    border-right: 5px solid #CCC;
+    vertical-align: top;
+    padding-right: 5px;
+
+    /* your custom style here */
+}
+
+/* for block of code */
+.hljs-ln-code {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+blockquote {
+    border-left: .5em solid #eee;
+    padding: 0 0 0 2em;
+    margin-left: 0;
+}
+
+blockquote cite {
+    font-size: 14px;
+    line-height: 20px;
+    color: #bfbfbf;
+}
+
+blockquote cite:before {
+    content: '\2014 \00A0';
+}
+
+blockquote p {
+    color: #666;
+}
+
+hr {
+    text-align: left;
+    color: #999;
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+}
+
+dl {
+    padding: 0;
+}
+
+dl dt {
+    padding: 10px 0;
+    margin-top: 16px;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: bold;
+}
+
+dl dd {
+    padding: 0 16px;
+    margin-bottom: 16px;
+}
+
+dd {
+    margin-left: 0;
+}
+
+/*滚动条整体样式*/
+::-webkit-scrollbar {
+    width: 10px;
+    height: 1px;
+}
+
+/*滚动条滑块*/
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #535353;
+}
+
+/*滚动条轨道*/
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    background: #ccc;
+}
+
+table[class*="table"] {
+    border-spacing: 0;
+    width: 99%;
+    border: 1px solid #ccc;
+}
+
+table thead tr[class*="table"] {
+    background: #f7f7f7;
+    height: 35px;
+}
+
+table tr[class*="table"] {
+    height: 30px;
+}
+
+table th[class*="table"] {
+    border-top: none;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    padding: 5px;
+    border-left: 1px solid #ccc;
+}
+
+table td[class*="table"] {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+table td[class*="table"]:first-child, table th[class*="table"]:first-child {
+    border-left: none;
+}

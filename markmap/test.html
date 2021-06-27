@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./markmap-lib.min.js"></script>
+    <script src="./d3@6.js"></script>
+    <script src="./markmap-view.js"></script>
+</head>
+<body>
+    <svg id="markmap" style="width: 100%; height: 800px"></svg>
+    <script>
+        const transformer = new markmap.Transformer();
+
+        // 1. transform markdown
+        const { root, features } = transformer.transform(`
+        # markmap
+
+## Links
+
+- <https://markmap.js.org/>
+- [GitHub](https://github.com/gera2ld/markmap)
+
+## Related
+
+- [coc-markmap](https://github.com/gera2ld/coc-markmap)
+- [gatsby-remark-markmap](https://github.com/gera2ld/gatsby-remark-markmap)
+
+## Features
+
+- links
+- **inline** ~~text~~ *styles*
+- multiline
+  text
+- Katex - $x = {-b \pm \sqrt{b^2-4ac} \over 2a}$
+`);
+
+        // 2. get assets
+        // either get assets required by used features
+        const { styles, scripts } = transformer.getUsedAssets(features);
+        
+        // 1. load assets
+        if (styles) markmap.loadCSS(styles);
+        if (scripts) markmap.loadJS(scripts, { getMarkmap: () => markmap });
+
+        // 2. create markmap
+        // `options` is optional, i.e. `undefined` can be passed here
+        markmap.Markmap.create('#markmap', undefined, root);
+    </script>
+</body>
+</html>

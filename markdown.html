@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>markdown</title>
+    <link rel="stylesheet" href="./markdown.css">
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [
+                    ['$', '$'],
+                    ['\\(', '\\)']
+                ]
+            },
+            startup: {
+                ready: function () {
+                    MathJax.startup.defaultReady();
+                }
+            }
+        }
+    </script>
+    <script id="MathJax-script" async src="./mathjax3/tex-mml-chtml.js">
+    </script>
+    <link rel="stylesheet" href="./highlight/styles/monokai.css">
+    <script src="./highlight/highlight.min.js"></script>
+    <script src="./highlight/highlightjs-line-numbers.min.js"></script>
+
+    <script>
+        /*
+        hljs.initHighlightingOnLoad();
+        hljs.initLineNumbersOnLoad({
+            singleLine: true
+        });
+        */
+
+        window.onload = function () {
+            window.addEventListener('message', function (event) {
+                //event.data获取传过来的数据
+                document.querySelector("#doc").innerHTML = event.data.content;
+
+                MathJax.texReset();
+                MathJax.typesetClear();
+                MathJax.typesetPromise().catch();
+
+                hljs.initHighlighting();
+                //console.log("hljs.initHighlighting");
+
+                hljs.initLineNumbersOnLoad({
+                    singleLine: true
+                });
+
+                window.scrollTo(0,document.body.scrollHeight*event.data.position);
+                //console.log(document.body.scrollHeight*event.data.position);
+                //console.log(document.body.scrollHeight);
+                parent.document.getElementById(event.data.name).height = document.body.scrollHeight + 20;
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div id="doc">
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./typescript/typescript.js"></script>
+    <script>
+        window.onload = function () {
+            window.addEventListener('message', async function (event) {
+                let result = ts.transpileModule(event.data.content, {
+                    compilerOptions: {
+
+                    }
+                });
+
+                let code = result.outputText;
+                code = code.replace(/console.log\(/g, "document.write('<br>'+");
+
+                document.writeln(`<script> ${code}<\/script>`)
+                //console.log(document.body.scrollHeight);
+                parent.document.getElementById(event.data.name).height = document.body.scrollHeight +
+                    20;
+            });
+        }
+    </script>
+
+</head>
+
+<body>
+</body>
+
+</html>
