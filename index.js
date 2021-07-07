@@ -149,6 +149,7 @@ window.onload = function () {
     editorWidth = Math.round((document.body.scrollWidth - 20) * 0.96 * 0.90);
     //console.log(editorWidth);
     load();
+    setStatus();
 }
 
 //窗口大小改变时调整编辑器宽度
@@ -897,7 +898,7 @@ function moveDown(id) {
 function setStatus() {
     let status = document.querySelector(".status");
     cellCount = Object.keys(cellStorage).length;
-    status.innerHTML = `&nbsp;&nbsp;当前单元数量：${cellCount} | 
+    status.innerHTML = `&nbsp;&nbsp;<a href="https://beian.miit.gov.cn" target='_blank'>鄂ICP备2021012082号</a> | 当前单元数量：${cellCount} | 
         当前单元：[${currentCell.substring(4)}]`;
     //console.log(cellStorage);
     //console.log(editorStorage);
@@ -907,7 +908,7 @@ function setStatus() {
 function aboutMessage() {
     alert(`
 jsWorking极速工作 V3.0@2021
-专注极速写文档、做PPT的Web工作平台。\n
+交互式Web工作平台。\n
 所用软件声明：
 pyodide
 Typescript

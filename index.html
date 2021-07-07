@@ -39,6 +39,7 @@
                 <a onclick="newFile()">新建</a>
                 <a onclick="openFile()">打开</a>
                 <a onclick="store();x0p('save','ok','info');">保存</a>
+                <a onclick="fileSaveAs();">下载</a>
                 <a onclick=>历史</a>
                 <input type="file" name="open" id="open" accept=".jsw" hidden />
             </div>
@@ -78,7 +79,6 @@
         <div class="dropdown">
             <button class="dropbtn">导出</button>
             <div class="dropdown-content">
-                <a onclick="fileSaveAs()">源文件</a>
                 <a onclick="append('python','python')">PDF</a>
                 <a onclick="append('javascript','javascript')">PPT</a>
                 <a onclick="append('javascript','javascript')">HTML</a>
